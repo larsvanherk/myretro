@@ -1,6 +1,9 @@
 @import '~skeleton-css/css/normalize.css';
 @import '~skeleton-css/css/skeleton.css';
 
-//// MyRetro Theme ////
-@import "./modules/config";
-@import "./modules/typography";
+//// V-RETRO Theme ////
+@import './modules/config';
+@import './modules/general';
+@import './modules/typography';
+@import './modules/buttons';
+@import './modules/cards';

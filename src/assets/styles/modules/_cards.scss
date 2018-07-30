@@ -1,0 +1,29 @@
+.card {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 20px;
+
+  border: 1px solid #bbb;
+  border-radius: 4px;
+
+  &--has-badge {
+    padding-right: 40px;
+  }
+
+  &__badge {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+
+    transform: translateY(-50%);
+  }
+
+  &__badge-upvote {
+    position: absolute;
+    top: -1em;
+    left: 49%;
+
+    cursor: pointer;
+    transform: translateX(-50%);
+  }
+}

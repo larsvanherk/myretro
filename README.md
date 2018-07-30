@@ -1,4 +1,4 @@
-# myretro
+# V-RETRO
 
 ## Project setup
 ```
