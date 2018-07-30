@@ -13,7 +13,8 @@
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "skeleton-css": "2.0.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.9",
@@ -43,5 +44,7 @@
       "vue-cli-service lint",
       "git add"
     ]
-  }
+  },
+  "keywords": [],
+  "description": "Demo App for Vue.js Antwerp"
 }
