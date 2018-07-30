@@ -3,7 +3,7 @@
     <h5 class="board-column__header">{{cardType}}</h5>
 
     <div v-for="card of cards" :key="card.id" class="card card--has-badge">
-      {{card.message}}
+      <pre>{{card.message}}</pre>
 
       <div class="card__badge">
         {{card.upvotes}}
@@ -11,8 +11,23 @@
       </div>
     </div>
 
-    <button class="button button--block"
-      @click="showForm()">
+    <form v-if="showForm" @submit.prevent="submitNewCard()">
+      <label for="message">Message</label>
+      <textarea v-model="message" class="u-full-width" id="message"></textarea>
+
+      <div class="row">
+        <button class="button one-half column" @click="showForm = false">
+          Cancel
+        </button>
+        <button class="button button-primary one-half column" type="submit"
+          :disabled="!message">
+          Add
+        </button>
+      </div>
+    </form>
+
+    <button v-else class="button button--block"
+      @click="showForm = true">
       Add a card
     </button>
   </div>
@@ -35,16 +50,24 @@ export default {
     }
   },
 
+  data: () => ({
+    showForm: false,
+    message: ''
+  }),
+
   methods: {
     ...mapActions(['addCard', 'upvoteCard']),
-    upvote(cardId) {
-      this.upvoteCard(cardId);
-    },
-    showForm() {
+    submitNewCard() {
       this.addCard({
         type: this.cardType.toUpperCase(),
-        message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed porro accusantium eveniet vero eum harum atque doloribus'
+        message: this.message
       });
+
+      this.showForm = false;
+      this.message = '';
+    },
+    upvote(cardId) {
+      this.upvoteCard(cardId);
     }
   }
 };

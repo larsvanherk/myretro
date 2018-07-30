@@ -6,6 +6,10 @@
   border: 1px solid #bbb;
   border-radius: 4px;
 
+  > pre {
+    margin: 0;
+  }
+
   &--has-badge {
     padding-right: 40px;
   }
