@@ -2,49 +2,65 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import uuid from 'uuid/v4';
+import flatMap from 'lodash/flatMap';
+
+import api from '@/api';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    retro: []
+    retro: {
+      listener: null,
+      data: []
+    }
   },
 
   getters: {
-    moreCards: state => state.retro
+    moreCards: state => state.retro.data
       .filter(entry => entry.type === 'MORE'),
-    lessCards: state => state.retro
+    lessCards: state => state.retro.data
       .filter(entry => entry.type === 'LESS'),
-    startCards: state => state.retro
+    startCards: state => state.retro.data
       .filter(entry => entry.type === 'START'),
-    stopCards: state => state.retro
+    stopCards: state => state.retro.data
       .filter(entry => entry.type === 'STOP'),
-    continueCards: state => state.retro
+    continueCards: state => state.retro.data
       .filter(entry => entry.type === 'CONTINUE')
   },
 
   mutations: {
-    addCard(state, { type, message }) {
-      state.retro.push({
-        id: uuid(),
-        type,
-        message,
-        upvotes: 0
-      });
+    setRetroListener(state, listener) {
+      state.retro.listener = listener;
     },
-    upvoteCard(state, cardId) {
-      state.retro
-        .find(card => card.id === cardId).upvotes += 1;
+    clearRetroListener(state) {
+      state.retro.listener = null;
+    },
+    updateRetro(state, retro) {
+      state.retro.data = retro;
     }
   },
 
   actions: {
-    addCard({ commit }, { type, message }) {
-      commit('addCard', { type, message });
+    bindRetroListener({ commit }) {
+      const listener = api.registerListener((res) => {
+        const updated = flatMap(
+          Object.entries(res.val() || {}),
+          cardGroup => Object.entries(cardGroup[1])
+            .map(card => ({
+              id: card[0],
+              type: cardGroup[0],
+              ...card[1]
+            }))
+        );
+
+        commit('updateRetro', updated);
+      });
+      commit('setRetroListener', listener);
     },
-    upvoteCard({ commit }, cardId) {
-      commit('upvoteCard', cardId);
+    detachRetroListener({ commit, state }) {
+      api.detachListener(state.retro.listener);
+      commit('clearRetroListener');
     }
   }
 });

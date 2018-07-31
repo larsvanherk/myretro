@@ -16,7 +16,7 @@
       <textarea v-model="message" class="u-full-width" id="message"></textarea>
 
       <div class="row">
-        <button class="button one-half column" @click="showForm = false">
+        <button class="button one-half column" type="button" @click="showForm = false">
           Cancel
         </button>
         <button class="button button-primary one-half column" type="submit"
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import api from '@/api';
 
 export default {
   name: 'BoardColumn',
@@ -56,9 +56,8 @@ export default {
   }),
 
   methods: {
-    ...mapActions(['addCard', 'upvoteCard']),
     submitNewCard() {
-      this.addCard({
+      api.addCard({
         type: this.cardType.toUpperCase(),
         message: this.message
       });
@@ -67,7 +66,7 @@ export default {
       this.message = '';
     },
     upvote(cardId) {
-      this.upvoteCard(cardId);
+      api.upvoteCard(this.cardType.toUpperCase(), cardId);
     }
   }
 };

@@ -11,5 +11,11 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App),
+  created() {
+    this.$store.dispatch('bindRetroListener');
+  },
+  beforeDestroy() {
+    this.$store.dispatch('bindRetroListener');
+  },
+  render: h => h(App)
 }).$mount('#app');
