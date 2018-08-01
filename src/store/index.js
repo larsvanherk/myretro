@@ -17,16 +17,7 @@ export default new Vuex.Store({
   },
 
   getters: {
-    moreCards: state => state.retro.data
-      .filter(entry => entry.type === 'MORE'),
-    lessCards: state => state.retro.data
-      .filter(entry => entry.type === 'LESS'),
-    startCards: state => state.retro.data
-      .filter(entry => entry.type === 'START'),
-    stopCards: state => state.retro.data
-      .filter(entry => entry.type === 'STOP'),
-    continueCards: state => state.retro.data
-      .filter(entry => entry.type === 'CONTINUE')
+    getCardCategory: state => category => state.retro.data.filter(entry => entry.type === category)
   },
 
   mutations: {

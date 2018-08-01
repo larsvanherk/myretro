@@ -4,14 +4,14 @@
       <div class="one-half column">
         <board-column
           card-type="More"
-          :cards="moreCards">
+          :cards="getCardCategory('MORE')">
         </board-column>
       </div>
 
       <div class="one-half column">
         <board-column
           card-type="Less"
-          :cards="lessCards">
+          :cards="getCardCategory('LESS')">
         </board-column>
       </div>
     </div>
@@ -20,21 +20,21 @@
       <div class="one-half column">
         <board-column
           card-type="Start"
-          :cards="startCards">
+          :cards="getCardCategory('START')">
         </board-column>
       </div>
 
       <div class="one-half column">
         <board-column
           card-type="Stop"
-          :cards="stopCards">
+          :cards="getCardCategory('STOP')">
         </board-column>
       </div>
     </div>
 
     <board-column
       card-type="Continue"
-      :cards="continueCards">
+      :cards="getCardCategory('CONTINUE')">
     </board-column>
   </div>
 </template>
@@ -52,13 +52,7 @@ export default {
 
   computed: {
     ...mapState(['retro']),
-    ...mapGetters([
-      'moreCards',
-      'lessCards',
-      'startCards',
-      'stopCards',
-      'continueCards'
-    ])
+    ...mapGetters(['getCardCategory'])
   }
 };
 </script>
